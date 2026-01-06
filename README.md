@@ -25,10 +25,10 @@ FFUF is a high-speed fuzzer. Use the `-mr` (match regexp) flag to identify succe
 
 **For Linux Targets:**
 ```bash
-ffuf -w Linux-specific-path-traversal-wordlist.txt -u [http://example.com/api/download?file=FUZZ](http://example.com/api/download?file=FUZZ) -mr "root:"
-
+ffuf -w <path_to_linux_wordlist.txt> -u <target_url>?<parameter>=FUZZ -mr "root:"
 ```
 
 **For Windows Targets:**
 ```bash
-ffuf -w ./Windows-specific-Path-Traversal-wordlist.txt -u [http://target.com/view?file=FUZZ](http://target.com/view?file=FUZZ) -mr "bit depth|extensions"
+ffuf -w <path_to_windows_wordlist.txt> -u <target_url>?<parameter>=FUZZ -mr "bit depth|extensions"
+```
